@@ -30,30 +30,34 @@ public class SuggestionRepositoryImpl extends SimpleJpaRepository implements Sug
 
     /**
      * Преобразует iterator в Iterable.
+     *
      * @param iterator входной параметр
      * @return
      */
-    public Iterable<Suggestion> toIterable(Iterator<Suggestion>  iterator) {
+    public Iterable<Suggestion> toIterable(Iterator<Suggestion> iterator) {
         return () -> iterator;
     }
 
     /**
      * Получение данных по входным парамертам
+     *
      * @param requestParams парамерты запроса
      * @return
      */
     @Override
     public Iterable<Suggestion> findAll(Map<String, String> requestParams) {
-        List<Suggestion> list0 = em.createQuery("select e from Suggestion e", Suggestion.class).getResultList();
-        for(Suggestion s: list0) {
+        List<Suggestion> list = em.createQuery("select e from Suggestion e where e.name like :q", Suggestion.class).
+                setParameter("q", requestParams.get("q") + "%").
+                getResultList();
+        List<Suggestion> result = new ArrayList<>();
+        for (Suggestion s : list) {
             Float score = scoreCalculator.getScore(s, requestParams);
             s.setScore(score);
-
+            result.add(s);
         }
-         list0 = list0.stream().sorted((s1,s2)->s2.getScore().compareTo(s1.getScore())).collect(Collectors.toList());
-
-        Iterator<Suggestion> iterator = list0.iterator();
-         return toIterable(iterator) ;
+        result.sort((a, b) -> b.getScore().compareTo(a.getScore()));
+        Iterator<Suggestion> iterator = result.iterator();
+        return toIterable(iterator);
     }
 
 }

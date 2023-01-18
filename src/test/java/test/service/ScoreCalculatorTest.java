@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 /**
  * Тест для проверки основного сервиса приложения
  */
-public class ScoreCalculatorTest {
+ public class ScoreCalculatorTest {
 
     private ScoreCalculator scoreCalculator = new ScoreCalculator();
 
@@ -20,36 +20,16 @@ public class ScoreCalculatorTest {
             Londontowne_MD_USA = new Suggestion("Londontowne, MD, USA", 38.93345f, -76.54941f);
 
     @Test
-    public void testShouldBePresented() {
-        Map<String, String> requestParams = Map.of("q", "Londo", "latitude", "43.70011", "longitude", "79.4163");
-        assertTrue(scoreCalculator.shouldBePresented(London_ON_Canada, requestParams));
-        assertTrue(scoreCalculator.shouldBePresented(London_OH_USA, requestParams));
-        assertTrue(scoreCalculator.shouldBePresented(London_KY_USA, requestParams));
-       assertTrue(scoreCalculator.shouldBePresented(Londontowne_MD_USA, requestParams));
-
-        requestParams = Map.of("q", "SomeRandomCityInTheMiddleOfNowhere");
-        assertFalse(scoreCalculator.shouldBePresented(London_ON_Canada, requestParams)
-        );
-
-        // Сервис может бросать ошибки в случае отсутствия обязательных параметров (q)
-        requestParams = Map.of();
-        try {
-            scoreCalculator.shouldBePresented(new Suggestion("London, ON, Canada", 42.98339f, -81.23304f),
-                    requestParams);
-            fail();
-        } catch (RuntimeException e) {
-            // Ok
-        }
-   }
-
-    @Test
     public void testGetScore() {
-        Map<String, String> requestParams = Map.of("q", "Londo", "latitude", "43.70011", "longitude", "79.4163");
+        Map<String, String> requestParams = Map.of("q", "Londo", "latitude", "43.70011", "longitude", "-79.4163");
+        scoreCalculator.getScore(London_ON_Canada, requestParams);
+        scoreCalculator.getScore(London_OH_USA, requestParams);
+        scoreCalculator.getScore(London_KY_USA, requestParams);
+        scoreCalculator.getScore(Londontowne_MD_USA, requestParams);
         assertFloatEquals(0.9f, scoreCalculator.getScore(London_ON_Canada, requestParams));
         assertFloatEquals(0.5f, scoreCalculator.getScore(London_OH_USA, requestParams));
         assertFloatEquals(0.5f, scoreCalculator.getScore(London_KY_USA, requestParams));
-        // TODO исправить потом
-        assertFloatEquals(0.9f, scoreCalculator.getScore(Londontowne_MD_USA, requestParams));
+        assertFloatEquals(0.3f, scoreCalculator.getScore(Londontowne_MD_USA, requestParams));
     }
 
     private void assertFloatEquals(Float f1, Float f2) {

@@ -36,10 +36,12 @@ public class SuggestionRepositoryImplTest {
                         .collect(Collectors.toList());
 
         assertEquals(
-                "[Suggestion{name='London, ON, Canada', latitude=42.98339, longitude=-81.23304, score=0.0}, " +
+                "[" +
+                        "Suggestion{name='Londontowne, MD, USA', latitude=38.93345, longitude=-76.54941, score=0.3}, " +
+                        "Suggestion{name='London, ON, Canada', latitude=42.98339, longitude=-81.23304, score=0.0}, " +
                         "Suggestion{name='London, OH, USA', latitude=39.88645, longitude=-83.44825, score=0.0}, " +
-                        "Suggestion{name='London, KY, USA', latitude=37.12898, longitude=-84.0832, score=0.0}, " +
-                        "Suggestion{name='Londontowne, MD, USA', latitude=38.93345, longitude=-76.54941, score=0.0}]", result.toString());
+                        "Suggestion{name='London, KY, USA', latitude=37.12898, longitude=-84.0832, score=0.0}" +
+                        "]", result.toString());
     }
 
 }

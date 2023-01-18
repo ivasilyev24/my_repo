@@ -25,7 +25,7 @@ public class Suggestion {
     @Column(nullable = false)
     private Float longitude;
 
-    @Column//(nullable = false)
+    @Column
     private Float score;
 
     public Suggestion setName(String name) {

@@ -5,16 +5,9 @@ import test.model.Suggestion;
 
 import java.util.Map;
 
+
 @Service
 public class ScoreCalculator {
-
-    public boolean shouldBePresented(Suggestion suggestion, Map<String, String> requestParams) {
-        String q = requestParams.get("q");
-        if (q == null) {
-            throw new RuntimeException();
-        }
-        return suggestion.getName().startsWith(q);
-    }
 
     public Float getScore(Suggestion suggestion, Map<String, String> requestParams) {
         String latitudeAsString = requestParams.get("latitude");
@@ -23,10 +16,17 @@ public class ScoreCalculator {
         Float longitude = longitudeAsString != null ? Float.parseFloat(longitudeAsString) : Float.MAX_VALUE;
         double val = Math.sqrt(Math.pow(latitude - suggestion.getLatitude(), 2) +
                 Math.pow(longitude - suggestion.getLongitude(), 2));
-        if (val<5) {
+        String q = requestParams.get("q");
+        String name = suggestion.getName();
+        int index = name.indexOf(",");
+        String firstWord = index==-1 ? "": name.substring(0,index);
+        if (firstWord.length()-q.length()>1) {
+            return 0.3f;
+        }
+        if (val<2) {
             return 0.9f;
         }
-        if (val<8) {
+        if (val<10) {
             return 0.5f;
         }
         return 0f;
