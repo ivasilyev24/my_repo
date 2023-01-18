@@ -12,6 +12,8 @@
 # ===================================================================
 
 spring:
+#  main:
+#    web-application-type: none
   application:
     name: test
     display_time_zone: GMT+3

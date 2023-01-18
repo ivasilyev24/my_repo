@@ -20,8 +20,14 @@ public class MyController {
     public Iterable<Suggestion> findById(@RequestParam Map<String,String> requestParams
     ) {
         String q = requestParams.get("q");
-        Float latitude = Float.parseFloat(requestParams.get("latitude"));
-        Float longitude = Float.parseFloat(requestParams.get("longitude"));
+        String latitudeAsString = requestParams.get("latitude");
+        if (latitudeAsString!=null) {
+            Float latitude = Float.parseFloat(latitudeAsString);
+        }
+        String longitudeAsString = requestParams.get("longitude");
+        if (longitudeAsString!=null) {
+            Float longitude = Float.parseFloat(longitudeAsString);
+        }
         Iterable<Suggestion> iterable = suggestionRepositoryCustom.findAll(requestParams);
         return iterable;
     }
