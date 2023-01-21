@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="IVasilyev" id="create-table-country">
+        <createTable tableName="country">
+            <column name="id" type="varchar(255)"/>
+            <column name="NAME" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="IVasilyev" id="loadCountryData">
+        <loadData catalogName="cat"
+                  commentLineStartsWith="//"
+                  encoding="UTF-8"
+                  file="countries.tsv"
+                  quotchar=""
+                  relativeToChangelogFile="true"
+                  schemaName="public"
+                  separator="&#9;"
+                  tableName="country"
+                  usePreparedStatements="true">
+        </loadData>
+    </changeSet>
+
+    <changeSet author="IVasilyev" id="create-table-state">
+        <createTable tableName="state">
+            <column name="id" type="varchar(255)"/>
+            <column name="NAME" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="IVasilyev" id="loadSTATEData">
+        <loadData catalogName="cat"
+                  commentLineStartsWith="//"
+                  encoding="UTF-8"
+                  file="states.tsv"
+                  quotchar=""
+                  relativeToChangelogFile="true"
+                  schemaName="public"
+                  separator="&#9;"
+                  tableName="STATE"
+                  usePreparedStatements="true">
+        </loadData>
+    </changeSet>
+
+    <changeSet author="IVasilyev" id="create-table-suggestions">
+        <createTable tableName="SUGGESTION">
+            <column name="id" type="int"/>
+            <column name="NAME" type="varchar(255)"/>
+            <column name="ascii" type="varchar(255)"/>
+            <!--<column name="ALT_NAME" type="varchar(2000)"/>-->
+            <column name="ALT_NAME" type="text"/>
+            <column name="LATITUDE" type="float"/>
+            <column name="lat" type="float"/>
+            <column name="long" type="float"/>
+            <column name="LONGITUDE" type="float"/>
+            <column name="SCORE" type="int"/>
+            <column name="FEAT_CLASS" type="varchar(255)"/>
+            <column name="FEAT_CODE" type="varchar(255)"/>
+            <column name="COUNTRY" type="varchar(255)"/>
+            <column name="CC2" type="varchar(255)"/>
+            <column name="ADMIN1" type="varchar(255)"/>
+            <column name="ADMIN2" type="varchar(255)"/>
+            <column name="ADMIN3" type="varchar(255)"/>
+            <column name="ADMIN4" type="varchar(255)"/>
+            <column name="POPULATION" type="varchar(255)"/>
+            <column name="ELEVATION" type="varchar(255)"/>
+
+            <column name="dem" type="varchar(255)"/>
+            <column name="tz" type="varchar(255)"/>
+            <column name="modified_at" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="IVasilyev" id="loadTestData">
+        <loadData catalogName="cat"
+                  commentLineStartsWith="//"
+                  encoding="UTF-8"
+                  file="cities_canada-usa.tsv"
+                  quotchar=""
+                  relativeToChangelogFile="true"
+                  schemaName="public"
+                  separator="&#9;"
+                  tableName="SUGGESTION"
+                  usePreparedStatements="true">
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

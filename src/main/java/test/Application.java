@@ -12,9 +12,6 @@ import org.springframework.boot.web.servlet.context.ServletWebServerApplicationC
 @SpringBootApplication
 public class Application {
 
-/*    @Autowired
-    private ServletWebServerApplicationContext webServerAppCtxt;*/
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }

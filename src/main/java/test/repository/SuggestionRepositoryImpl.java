@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
 import test.model.Suggestion;
+import test.model.SuggestionDTO;
 import test.service.ScoreCalculator;
 
 import javax.persistence.EntityManager;
@@ -34,7 +35,7 @@ public class SuggestionRepositoryImpl extends SimpleJpaRepository implements Sug
      * @param iterator входной параметр
      * @return
      */
-    public Iterable<Suggestion> toIterable(Iterator<Suggestion> iterator) {
+    public Iterable<SuggestionDTO> toIterable(Iterator<SuggestionDTO> iterator) {
         return () -> iterator;
     }
 
@@ -45,8 +46,8 @@ public class SuggestionRepositoryImpl extends SimpleJpaRepository implements Sug
      * @return
      */
     @Override
-    public Iterable<Suggestion> findAll(Map<String, String> requestParams) {
-        List<Suggestion> list = em.createQuery("select e from Suggestion e where e.name like :q", Suggestion.class).
+    public Iterable<SuggestionDTO> findAll(Map<String, String> requestParams) {
+         List<Suggestion> list = em.createQuery("select e from Suggestion e where e.name like :q", Suggestion.class).
                 setParameter("q", requestParams.get("q") + "%").
                 getResultList();
         List<Suggestion> result = new ArrayList<>();
@@ -56,7 +57,8 @@ public class SuggestionRepositoryImpl extends SimpleJpaRepository implements Sug
             result.add(s);
         }
         result.sort((a, b) -> b.getScore().compareTo(a.getScore()));
-        Iterator<Suggestion> iterator = result.iterator();
+        List<SuggestionDTO> list2 = result.stream().map(s -> new SuggestionDTO(s)).collect(Collectors.toList());
+        Iterator<SuggestionDTO> iterator = list2.iterator();
         return toIterable(iterator);
     }
 

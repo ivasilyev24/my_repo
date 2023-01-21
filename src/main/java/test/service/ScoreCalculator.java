@@ -19,7 +19,7 @@ public class ScoreCalculator {
         String q = requestParams.get("q");
         String name = suggestion.getName();
         int index = name.indexOf(",");
-        String firstWord = index==-1 ? "": name.substring(0,index);
+        String firstWord = index==-1 ? name: name.substring(0,index);
         if (firstWord.length()-q.length()>1) {
             return 0.3f;
         }

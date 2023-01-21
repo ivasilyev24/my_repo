@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import test.model.Suggestion;
+import test.model.SuggestionDTO;
 import test.repository.SuggestionRepository;
 import test.repository.SuggestionRepositoryCustom;
 
@@ -17,7 +18,7 @@ public class MyController {
     private SuggestionRepository suggestionRepositoryCustom;
 
     @GetMapping(value = "/suggestions")
-    public Iterable<Suggestion> findById(@RequestParam Map<String,String> requestParams
+    public Iterable<SuggestionDTO> findById(@RequestParam Map<String,String> requestParams
     ) {
         String q = requestParams.get("q");
         String latitudeAsString = requestParams.get("latitude");
@@ -28,7 +29,7 @@ public class MyController {
         if (longitudeAsString!=null) {
             Float longitude = Float.parseFloat(longitudeAsString);
         }
-        Iterable<Suggestion> iterable = suggestionRepositoryCustom.findAll(requestParams);
+        Iterable<SuggestionDTO> iterable = suggestionRepositoryCustom.findAll(requestParams);
         return iterable;
     }
 

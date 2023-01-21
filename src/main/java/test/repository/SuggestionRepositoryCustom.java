@@ -1,11 +1,11 @@
 package test.repository;
 
-import test.model.Suggestion;
+import test.model.SuggestionDTO;
 
 import java.util.Map;
 
 public interface SuggestionRepositoryCustom {
 
-    Iterable<Suggestion> findAll(Map<String,String> requestParams);
+    Iterable<SuggestionDTO> findAll(Map<String,String> requestParams);
 
 }

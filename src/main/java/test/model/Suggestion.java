@@ -1,8 +1,8 @@
 package test.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.Formula;
+
+import javax.persistence.*;
 
 @Entity
 public class Suggestion {
@@ -17,16 +17,27 @@ public class Suggestion {
     }
 
     @Id
+    private Integer id;
+
+    @Column
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "lat", nullable = false)
     private Float latitude;
 
-    @Column(nullable = false)
+    @Column(name = "long", nullable = false)
     private Float longitude;
 
     @Column
     private Float score;
+
+    @ManyToOne
+    @JoinColumn(name = "country")
+    private Country country;
+
+    @ManyToOne
+    @JoinColumn(name = "ADMIN1")
+    private State state;
 
     public Suggestion setName(String name) {
         this.name = name;
@@ -64,6 +75,14 @@ public class Suggestion {
         return score;
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
     @Override
     public String toString() {
         return "Suggestion{" +
@@ -71,6 +90,8 @@ public class Suggestion {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", score=" + score +
+                ", state=" + state +
+                ", country=" + country +
                 '}';
     }
 
