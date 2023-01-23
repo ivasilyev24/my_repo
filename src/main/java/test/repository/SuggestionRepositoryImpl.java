@@ -47,11 +47,12 @@ public class SuggestionRepositoryImpl extends SimpleJpaRepository implements Sug
      */
     @Override
     public Iterable<SuggestionDTO> findAll(Map<String, String> requestParams) {
-         List<Suggestion> list = em.createQuery("select e from Suggestion e " +
-                                 "left outer join fetch e.country " +
-                                 "left outer join fetch e.state " +
-                         "where e.name like :q "
-                         , Suggestion.class).
+        List<Suggestion> list = em.createQuery("""
+                                select e from Suggestion e 
+                                left outer join fetch e.country 
+                                left outer join fetch e.state 
+                                where e.name like :q"""
+                        , Suggestion.class).
                 setParameter("q", requestParams.get("q") + "%").
                 getResultList();
         List<Suggestion> result = new ArrayList<>();
@@ -61,7 +62,12 @@ public class SuggestionRepositoryImpl extends SimpleJpaRepository implements Sug
             result.add(s);
         }
         result.sort((a, b) -> b.getScore().compareTo(a.getScore()));
-        List<SuggestionDTO> list2 = result.stream().map(s -> new SuggestionDTO(s)).collect(Collectors.toList());
+        List<SuggestionDTO> list2 = result.stream().map(s -> new SuggestionDTO(
+                s.getName() + ", " + s.getState().getName() + ", " + s.getCountry().getName(),
+                //s.getCountry().getName() + ", " + s.getState().getName() + ", " + s.getName(),
+                s.getLatitude(),
+                s.getLongitude(), s.getScore()
+        )).collect(Collectors.toList());
         Iterator<SuggestionDTO> iterator = list2.iterator();
         return toIterable(iterator);
     }
