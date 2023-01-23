@@ -47,7 +47,11 @@ public class SuggestionRepositoryImpl extends SimpleJpaRepository implements Sug
      */
     @Override
     public Iterable<SuggestionDTO> findAll(Map<String, String> requestParams) {
-         List<Suggestion> list = em.createQuery("select e from Suggestion e where e.name like :q", Suggestion.class).
+         List<Suggestion> list = em.createQuery("select e from Suggestion e " +
+                                 "left outer join fetch e.country " +
+                                 "left outer join fetch e.state " +
+                         "where e.name like :q "
+                         , Suggestion.class).
                 setParameter("q", requestParams.get("q") + "%").
                 getResultList();
         List<Suggestion> result = new ArrayList<>();
