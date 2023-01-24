@@ -64,7 +64,6 @@ public class SuggestionRepositoryImpl extends SimpleJpaRepository implements Sug
         result.sort((a, b) -> b.getScore().compareTo(a.getScore()));
         List<SuggestionDTO> list2 = result.stream().map(s -> new SuggestionDTO(
                 s.getName() + ", " + s.getState().getName() + ", " + s.getCountry().getName(),
-                //s.getCountry().getName() + ", " + s.getState().getName() + ", " + s.getName(),
                 s.getLatitude(),
                 s.getLongitude(), s.getScore()
         )).collect(Collectors.toList());

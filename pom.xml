@@ -115,7 +115,7 @@
     <properties>
         <start-class>com.baeldung.books.SpringDataRestApplication</start-class>
         <maven.version>1.0</maven.version>
-        <spring-boot.version>2.7.2</spring-boot.version>
+        <spring-boot.version>4.0.2.RELEASE</spring-boot.version>
         <h2.version>2.7.2</h2.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
