@@ -49,12 +49,4 @@ public class MyController {
         return ex;
     }
 
-
-/*    @ExceptionHandler(Exception.class)
-    public ResponseStatusException handleException(Exception e) {
-    return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body(new ErrorMessage(e.getMessage()))*/;
-//}
-
 }
