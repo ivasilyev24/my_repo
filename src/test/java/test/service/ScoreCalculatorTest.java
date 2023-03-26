@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 /**
  * Тест для проверки основного сервиса приложения
  */
- public class ScoreCalculatorTest {
+public class ScoreCalculatorTest {
 
     private ScoreCalculator scoreCalculator = new ScoreCalculator();
 
@@ -21,14 +21,22 @@ import static org.junit.Assert.*;
 
     @Test
     public void testGetScore() {
-        Map<String, String> requestParams = Map.of("q", "Londo", "latitude", "43.70011", "longitude", "-79.4163");
+        Map<String, String> requestParams = Map.of(
+                "q", "Londo",
+                "latitude", "43.70011",
+                "longitude", "-79.4163"
+        );
+
         scoreCalculator.getScore(London_ON_Canada, requestParams);
-        scoreCalculator.getScore(London_OH_USA, requestParams);
-        scoreCalculator.getScore(London_KY_USA, requestParams);
-        scoreCalculator.getScore(Londontowne_MD_USA, requestParams);
         assertFloatEquals(0.9f, scoreCalculator.getScore(London_ON_Canada, requestParams));
+
+        scoreCalculator.getScore(London_OH_USA, requestParams);
         assertFloatEquals(0.5f, scoreCalculator.getScore(London_OH_USA, requestParams));
+
+        scoreCalculator.getScore(London_KY_USA, requestParams);
         assertFloatEquals(0.5f, scoreCalculator.getScore(London_KY_USA, requestParams));
+
+        scoreCalculator.getScore(Londontowne_MD_USA, requestParams);
         assertFloatEquals(0.3f, scoreCalculator.getScore(Londontowne_MD_USA, requestParams));
     }
 
