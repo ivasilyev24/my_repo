@@ -1,8 +1,6 @@
 package test.model;
 
-import org.hibernate.annotations.Formula;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Suggestion {
